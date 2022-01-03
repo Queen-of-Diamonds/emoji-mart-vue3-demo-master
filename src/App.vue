@@ -1,21 +1,17 @@
 <template>
   <div class="textarea-emoji-picker">
-    <!-- <textarea
+    <textarea
       ref="textarea"
       class="textarea"
       :value="value"
       @input="$emit('input', $event.target.value)"
-    >
-    </textarea> -->
+    ></textarea>
+  
     <div class="row">
       <Picker
         v-show="showEmojiPicker"
         title="Pick your emoji..."
         :data="emojiIndex"
-        :include="['people']"
-        native
-        :show-categories="false"
-        :show-search="false"
         set="twitter"
         emoji="point_up"
         @select="showEmoji"
@@ -39,7 +35,7 @@
         </svg>
       </span>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -67,7 +63,11 @@ export default {
   methods: {
     showEmoji(emoji) {
       this.emojisOutput = this.emojisOutput + emoji.native;
+      
     },
+    toggleEmojiPicker() {
+      this.showEmojiPicker = !this.showEmojiPicker;
+    }
   },
 };
 </script>
