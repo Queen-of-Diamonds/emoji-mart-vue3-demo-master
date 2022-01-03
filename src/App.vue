@@ -3,10 +3,10 @@
     <textarea
       ref="textarea"
       class="textarea"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
+      v-model="value"
+      v-on:keyup.enter="submit"
     ></textarea>
-  
+
     <div class="row">
       <Picker
         v-show="showEmojiPicker"
@@ -18,6 +18,7 @@
       />
     </div>
 
+
     <div class="row">
       <div>
         {{ emojisOutput }}
@@ -25,7 +26,7 @@
       <span
         class="emoji-trigger"
         :class="{ triggered: showEmojiPicker }"
-        @mousedown.prevent="toggleEmojiPicker"
+        @click="toggleEmojiPicker"
       >
         <svg style="width: 20px; height: 20px" viewBox="0 0 24 24">
           <path
@@ -34,8 +35,9 @@
           />
         </svg>
       </span>
+      <p>{{ outputValueOnEnter }}</p>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -54,20 +56,30 @@ export default {
 
   data() {
     return {
-      showEmojiPicker: true,
+      showEmojiPicker: false,
       emojiIndex: emojiIndex,
       emojisOutput: "",
+      value: null,
+      outputValueOnEnter: "",
     };
   },
 
   methods: {
     showEmoji(emoji) {
       this.emojisOutput = this.emojisOutput + emoji.native;
-      
+      this.addEmoji(emoji);
     },
     toggleEmojiPicker() {
       this.showEmojiPicker = !this.showEmojiPicker;
-    }
+    },
+    addEmoji(emoji) {
+      this.value = this.value + emoji.native
+      this.toggleEmojiPicker()
+    },
+    submit(e) {
+      this.outputValueOnEnter = e.target.value;
+      e.target.value = "";
+    },
   },
 };
 </script>
@@ -99,17 +111,13 @@ export default {
   margin: 0 auto;
 }
 .textarea {
+  display: block;
   width: 100%;
-  min-height: 300px;
-  outline: none;
-  box-shadow: none;
-  padding: 10px 28px 10px 10px;
-  font-size: 15px;
-  border: 1px solid #bababa;
-  color: #333;
-  border-radius: 2px;
-  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.1) inset;
-  resize: vertical;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+  border: 1px solid #ccc;
 }
 .emoji-mart {
   position: absolute;
