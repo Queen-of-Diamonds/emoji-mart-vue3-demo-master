@@ -13,7 +13,7 @@
         title="Pick your emoji..."
         :data="emojiIndex"
         set="twitter"
-        emoji="point_up"
+        
         @select="showEmoji"
       />
     </div>
@@ -74,6 +74,7 @@ export default {
     },
     addEmoji(emoji) {
       this.value = this.value + emoji.native
+            console.log("🚀 ~ file: App.vue ~ line 69 ~ showEmoji ~ emoji", emoji)
       this.toggleEmojiPicker()
     },
     submit(e) {
@@ -118,6 +119,8 @@ export default {
   min-height: 40px;
   line-height: 20px;
   border: 1px solid #ccc;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
 }
 .emoji-mart {
   position: absolute;
